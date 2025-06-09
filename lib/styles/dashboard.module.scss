@@ -1,0 +1,12 @@
+.root{
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    &__main{
+        display: flex;
+        height: 100%;
+    }
+    &__children{
+        width: 100%;
+    }
+}

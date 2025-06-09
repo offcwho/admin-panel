@@ -1,0 +1,1 @@
+export default function TableCell({ children }: { children: React.ReactNode }) { return <div role="cell">{children}</div> }

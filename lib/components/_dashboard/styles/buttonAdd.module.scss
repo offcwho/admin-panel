@@ -1,0 +1,16 @@
+.root{
+    width: 100%;
+    display: flex;
+    justify-content: end;
+    &__button{
+        padding-block: .6rem;
+        padding-inline: .8rem;
+        background-color: #1c86ff;
+        border-radius: .9rem;
+        transition: all .3s ease-in-out;
+        &:hover{
+            background-color: #fff;
+            color: #3e3e3e;
+        }
+    }
+}
