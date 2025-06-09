@@ -1,11 +1,7 @@
-interface Error {
-    message: string
-}
-
-export default function Error({error}: {error: Error}) {
+export default function Error({ error }: { error: string }) {
     return (
         <>
-            {error.message}
+            {error}
         </>
     )
 }

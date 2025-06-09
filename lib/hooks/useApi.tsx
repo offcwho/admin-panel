@@ -1,14 +1,13 @@
 import { useState } from "react"
 import api from "../api/api"
-import validator from 'validator'
 
 export default function useApi() {
-    const [data, setData] = useState([])
+    const [data, setData] = useState<Record<string, string>>({})
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState('')
     const [success, setSuccess] = useState('')
 
-    const post = async (values: Record<string, string>, link: string, params: string) => {
+    const post = async ({ values, link, params }: { values: Record<string, string>, link: string, params: string }) => {
         try {
             await api.post(
                 link,
@@ -29,12 +28,12 @@ export default function useApi() {
             setSuccess('Success')
         }
     }
-    const get = async (prop: string) => {
+    const get = async (api_link: string) => {
         try {
-            const response = await api.get(prop)
+            const response = await api.get(api_link)
             setData(response.data)
         } catch (error) {
-            setError(error)
+            setError('error')
         } finally {
             setLoading(false)
         }

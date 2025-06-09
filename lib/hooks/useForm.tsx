@@ -1,41 +1,22 @@
 import { useState } from "react";
 import TextInput from "../components/_dashboard/components/TextInput"
 import FormGroup from "../components/_dashboard/components/FormGroup";
+import useApi from "./useApi";
 
-interface InputConfig {
-    name: string,
-    label?: string,
-    placeholder?: string,
-}
-
-export function Form({ inputs, group }: { inputs: InputConfig[], group: boolean[] }) {
-
-    const [formData, setFormData] = useState<Record<string, string>>(
-        inputs.reduce((acc, input) => ({ ...acc, [input.name]: '' }), {})
-    );
-
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = e.target;
-        setFormData(prev => ({ ...prev, [name]: value }));
-    };
-    return (
-        <>
-            {inputs.map(input => (
-                <TextInput
-                    key={input.name} // Используем имя как ключ (оно должно быть уникальным)
-                    placeholder={input.placeholder}
-                    name={input.name}
-                    label={input.label}
-                    value={formData[input.name] || ''} // Используем соответствующее поле из formData
-                    onChange={handleChange}
-                />
-            ))}
-        </>
-    )
-}
-export function useForm() {
-
+export function useForm({ params, link }: { params: string, link: string }) {
+    const { post } = useApi()
     const [values, setValues] = useState<Record<string, string>>({})
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault()
+        try {
+            await post({ values: values, link: link, params: params })
+        } catch (error) {
+            console.log('error')
+        } finally {
+            console.log('success')
+        }
+    }
 
     const handleChange = (name: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
         setValues(prev => ({
@@ -43,33 +24,39 @@ export function useForm() {
             [name]: e.target.value
         }))
     }
-    const form = (children: React.ReactNode) => {
+    const form = (children: React.ReactNode[], {gap, cols}: {gap?: number, cols?: number}) => {
         return (
-            <form>
-                {children}
+            <form onSubmit={handleSubmit} className={`grid gap-${gap} grid-cols-${cols}`}>
+                <>
+                    {children}
+                </>
+                <button type="submit">asdas</button>
             </form>
         )
     }
-    const group = (children: Element[]) => {
-        return <FormGroup>{children}</FormGroup>
+    const group = (children: React.ReactNode[]) => {
+        return <FormGroup><>{children}</></FormGroup>
     }
     const textInput = (
-        { 
-            name, 
-            placeholder, 
-            label 
-        }: { 
-            name: string, 
-            placeholder?: string, 
-            label?: string 
+        {
+            name,
+            placeholder,
+            label,
+            type
+        }: {
+            name: string,
+            placeholder?: string,
+            label?: string
+            type?: string
         }) => {
         return (
             <TextInput
-                key={name} // Используем имя как ключ (оно должно быть уникальным)
+                type={type || ''}
+                key={name}
                 placeholder={placeholder}
                 name={name}
                 label={label}
-                value={values[name] || ''} // Используем соответствующее поле из formData
+                value={values[name] || ''}
                 onChange={handleChange(name)}
             />
         )
