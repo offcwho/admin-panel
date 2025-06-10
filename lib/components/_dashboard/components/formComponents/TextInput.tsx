@@ -1,6 +1,6 @@
 'use client'
 
-import styles from '../styles/textinput.module.scss'
+import styles from './formComponents.module.scss'
 
 export default function TextInput({ 
     label, 

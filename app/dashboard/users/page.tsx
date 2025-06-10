@@ -18,10 +18,8 @@ export default function Page() {
     if (loading) return <Loading />
     return (
         <div className={styles.root}>
-            <Section>
-                <Table>
-                    <TableBuilder data={data} pageName={`users`} />
-                </Table>
+            <Section> 
+                <TableBuilder data={data} pageName={`users`} />
             </Section>
         </div>
     )

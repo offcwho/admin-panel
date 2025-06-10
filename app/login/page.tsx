@@ -4,6 +4,7 @@ import { useAuth } from "@/lib/context/AuthContext";
 import { useRouter } from "next/navigation";
 import { FormEvent, useEffect, useState } from "react"
 import styles from './login.module.scss'
+import Loading from "@/lib/components/Loading";
 
 export default function Page() {
     const [email, setEmail] = useState('');
@@ -13,12 +14,6 @@ export default function Page() {
 
     const { user, login, loading } = useAuth()
     const router = useRouter();
-
-    useEffect(() => {
-        if (user) {
-            router.push('/dashboard')
-        }
-    }, [user, router])
 
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault()
@@ -35,7 +30,7 @@ export default function Page() {
             router.push('/dashboard')
         }
     }
-    if (loading) return <div className="">Loading...</div>
+    if (loading) return <Loading/>
 
     return (
         <section className={styles.root}>

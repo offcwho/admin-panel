@@ -2,7 +2,7 @@ import { useState } from "react"
 import api from "../api/api"
 
 export default function useApi() {
-    const [data, setData] = useState<Record<string, string>>({})
+    const [data, setData] = useState<any[]>([])
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState('')
     const [success, setSuccess] = useState('')

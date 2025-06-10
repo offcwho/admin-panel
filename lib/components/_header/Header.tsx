@@ -11,7 +11,7 @@ export default function Header() {
     const router = useRouter()
     const handleClick = () => {
         logout()
-        router.refresh()
+        router.push('/login')
     }
 
     return (

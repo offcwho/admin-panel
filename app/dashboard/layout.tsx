@@ -19,13 +19,15 @@ export default function RootLayout({
     <div className={styles.root}>
       <AuthProvider>
         <Router>
-          <Header />
-          <main className={styles.root__main}>
-            <Sidebar />
-            <div className={styles.root__children}>
-              {children}
-            </div>
-          </main>
+          <>
+            <Header />
+            <main className={styles.root__main}>
+              <Sidebar />
+              <div className={styles.root__children}>
+                {children}
+              </div>
+            </main>
+            </>
         </Router>
       </AuthProvider>
     </div>
