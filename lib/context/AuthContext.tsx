@@ -3,7 +3,7 @@
 import { createContext, ReactNode, useContext, useEffect, useState } from "react"
 import Cookies from "js-cookie"
 import api from "../api/api"
-import { useRouter } from "next/navigation"
+import { redirect, useRouter } from "next/navigation"
 
 
 interface User {
@@ -41,8 +41,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
                 setLoading(false)
             }
         }
-
         loadUser()
+        console.log(user)
     }, [])
 
     const login = async (email: string, password: string) => {
@@ -77,10 +77,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             await api.post('/api/logout')
             Cookies.remove('auth_token')
             setUser(null)
+            
         } catch (error) {
             console.log(error)
             throw error
         }
+        redirect('/login')
     }
 
     const register = async (name: string, email: string, password: string, password_confirmation: string) => {

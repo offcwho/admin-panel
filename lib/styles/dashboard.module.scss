@@ -1,12 +1,15 @@
-.root{
+.root {
     height: 100vh;
     display: flex;
     flex-direction: column;
-    &__main{
+    overflow: hidden;
+    &__main {
         display: flex;
         height: 100%;
+        overflow: hidden;
     }
-    &__children{
+
+    &__children {
         width: 100%;
     }
 }

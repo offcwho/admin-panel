@@ -1,6 +1,6 @@
 'use client'
 
-import Loading from "@/lib/components/Loading";
+import Loading from "@/lib/components/_loading/Loading";
 import { useAuth } from "@/lib/context/AuthContext";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";

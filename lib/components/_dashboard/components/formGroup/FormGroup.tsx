@@ -1,0 +1,2 @@
+import styles from './formGroup.module.scss'
+export default function FormGroup({ children, className }: { children: React.ReactNode, className?: string }) { return <div className={`${styles.root} ${className}`}>{children}</div> }

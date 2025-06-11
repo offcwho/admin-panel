@@ -4,14 +4,15 @@ import { useAuth } from "@/lib/context/AuthContext"
 import { LogOut } from 'lucide-react'
 import styles from './header.module.scss'
 import Link from "next/link"
-import { useRouter } from "next/navigation"
+import { redirect, useRouter } from "next/navigation"
+import { useEffect } from "react"
 
 export default function Header() {
-    const { logout } = useAuth()
+    const { logout, user } = useAuth()
     const router = useRouter()
+
     const handleClick = () => {
         logout()
-        router.push('/login')
     }
 
     return (

@@ -1,10 +1,11 @@
 import { useState } from "react";
-import TextInput from "../components/_dashboard/components/formComponents/TextInput"
-import FormGroup from "../components/_dashboard/components/FormGroup";
+import TextInput from "../components/_dashboard/components/form/TextInput"
+import FormGroup from "../components/_dashboard/components/formGroup/FormGroup";
 import useApi from "./useApi";
-import Textarea from "../components/_dashboard/components/formComponents/Textarea";
-import FileInput from "../components/_dashboard/components/formComponents/FileInput";
-import FormButton from "../components/_dashboard/components/formComponents/FormButton";
+import Textarea from "../components/_dashboard/components/form/Textarea";
+import FileInput from "../components/_dashboard/components/form/FileInput";
+import FormButton from "../components/_dashboard/components/form/FormButton";
+import styles from '../../app/dashboard/users/page.module.scss'
 
 export function useForm({ params, link }: { params: string, link: string }) {
     const { post } = useApi()
@@ -29,16 +30,16 @@ export function useForm({ params, link }: { params: string, link: string }) {
     }
     const form = (children: React.ReactNode[], { gap, cols }: { gap?: number, cols?: number }) => {
         return (
-            <form onSubmit={handleSubmit} className={`grid gap-${gap} grid-cols-${cols}`}>
+            <form onSubmit={handleSubmit} className={`grid gap-${gap} grid-cols-${cols} ${styles.root__form}`}>
                 <>
                     {children}
                 </>
-                <FormButton/>
+                <FormButton />
             </form>
         )
     }
-    const group = (children: React.ReactNode[]) => {
-        return <FormGroup><>{children}</></FormGroup>
+    const group = (children: React.ReactNode[], { className }: { className?: string }) => {
+        return <FormGroup className={className}><>{children}</></FormGroup>
     }
     const textInput = (
         {
@@ -93,7 +94,7 @@ export function useForm({ params, link }: { params: string, link: string }) {
         label?: string,
     }) => {
         console.log(values[name])
-        return <FileInput 
+        return <FileInput
             key={name}
             name={name}
             label={label}

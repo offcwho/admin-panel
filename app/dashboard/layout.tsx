@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Header from "@/lib/components/_header/Header";
 import Sidebar from "@/lib/components/_sidebar/Sidebar";
-import { AuthProvider } from "@/lib/context/AuthContext";
 import styles from '../../lib/styles/dashboard.module.scss';
 import Router from "@/lib/components/_dashboard/components/Router";
 
@@ -17,7 +16,6 @@ export default function RootLayout({
 }>) {
   return (
     <div className={styles.root}>
-      <AuthProvider>
         <Router>
           <>
             <Header />
@@ -29,7 +27,6 @@ export default function RootLayout({
             </main>
             </>
         </Router>
-      </AuthProvider>
     </div>
   );
 }

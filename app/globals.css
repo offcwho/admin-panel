@@ -20,7 +20,58 @@
 }
 
 body {
-  background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-ubuntu);
+  background-color: #000000;
+  background-image:
+    radial-gradient(at 47% 33%, hsl(160.00, 34%, 20%) 0, transparent 59%),
+    radial-gradient(at 82% 65%, hsl(215.12, 54%, 15%) 0, transparent 55%);
+  height: 100vh;
+  background-size: 150% 150%;
+  -webkit-animation: Animation 5s ease infinite;
+  -moz-animation: Animation 5s ease infinite;
+  animation: Animation 60s ease infinite;
+  overflow: hidden;
+}
+
+@-webkit-keyframes Animation {
+  0% {
+    background-position: 10% 0%
+  }
+
+  50% {
+    background-position: 91% 100%
+  }
+
+  100% {
+    background-position: 10% 0%
+  }
+}
+
+@-moz-keyframes Animation {
+  0% {
+    background-position: 10% 0%
+  }
+
+  50% {
+    background-position: 91% 100%
+  }
+
+  100% {
+    background-position: 10% 0%
+  }
+}
+
+@keyframes Animation {
+  0% {
+    background-position: 10% 0%
+  }
+
+  50% {
+    background-position: 91% 100%
+  }
+
+  100% {
+    background-position: 10% 0%
+  }
 }

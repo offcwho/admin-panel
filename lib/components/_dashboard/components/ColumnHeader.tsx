@@ -1,1 +1,0 @@
-export default function ColumnHeader({ children }: { children: React.ReactNode }) { return <div role="columnheader">{children}</div> }

@@ -1,11 +1,11 @@
 import { SquarePen } from 'lucide-react'
 import TableCell from './TableCell'
 import { useRouter } from 'next/navigation'
-export default function TableRow({ children, edit, header, pageName }: { children: React.ReactNode, edit?: string, header?: boolean, pageName?: string }) {
+export default function TableRow({ children, edit, pageName }: { children: React.ReactNode, edit?: string, pageName?: string }) {
     const router = useRouter()
     const submit = () => { router.push(`/dashboard/${pageName}/${edit}`) }
     return (
-        <div role="row" className={header ? `background` : ''}>
+        <div role="row" className='row'>
             {children}
             {edit ?
                 <TableCell>

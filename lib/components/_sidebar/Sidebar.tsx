@@ -1,5 +1,9 @@
+'use client'
 import Link from "next/link"
 import styles from './sidebar.module.scss';
+import Pages from "@/app/dashboard/Pages";
+import SimpleBar from 'simplebar-react';
+import 'simplebar-react/dist/simplebar.min.css';
 
 interface links {
     links: [
@@ -11,9 +15,9 @@ interface links {
 export default function Sidebar() {
     return (
         <nav className={styles.root}>
-            <li className={styles.root__item}>
-                <Link className={styles.root__link} href={`/dashboard/users`}>Users</Link>
-            </li>
+            <SimpleBar style={{ maxHeight: '100%' }}>
+                <Pages />
+            </SimpleBar>
         </nav>
     )
 }

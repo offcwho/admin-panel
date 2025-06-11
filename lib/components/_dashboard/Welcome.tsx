@@ -2,7 +2,7 @@
 
 import { useAuth } from '@/lib/context/AuthContext'
 import styles from './styles/welcome.module.scss'
-import Loading from '../Loading'
+import Loading from '../_loading/Loading'
 import { useRouter } from 'next/navigation'
 
 export default function Welcome() {
