@@ -7,15 +7,16 @@ import Loading from "../../_loading/Loading";
 
 export default function Router({ children }: { children: React.ReactNode }) {
     const { user, loading } = useAuth()
-    const router = useRouter()
 
     useEffect(() => {
-        if (!user) {
-            redirect('/login')
-        } 
+        if (!loading) {
+            if (!user) {
+                redirect('/login')
+            }
+        }
     }, [user])
 
-    if(loading) return <Loading />
+    if (loading) return <Loading />
 
     return (
         <>
