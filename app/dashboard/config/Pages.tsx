@@ -6,6 +6,9 @@ export default function Pages() {
     return pages([
         item('users'),
         accordion([
+            item(`nigga`)
+        ], 'pidor'),
+        accordion([
             item(`userss`),
             item(`data`)
         ], 'userss'),
