@@ -1,7 +1,7 @@
 'use client'
-import Link from "next/link"
+
 import styles from './sidebar.module.scss';
-import Pages from "@/app/dashboard/Pages";
+import Pages from "@/app/dashboard/config/Pages";
 import SimpleBar from 'simplebar-react';
 import 'simplebar-react/dist/simplebar.min.css';
 

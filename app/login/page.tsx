@@ -43,7 +43,6 @@ export default function Page() {
     }
 
     function randomNumberInRange() {
-        // 👇️ Get the number between min (inclusive) and max (inclusive)
         return Math.floor(Math.random() * (100 - 0 + 1)) + 1;
     }
 
