@@ -1,9 +1,10 @@
 .root {
     display: flex;
     flex-direction: column;
-    gap: .3rem;
+    gap: .4rem;
     width: 100%;
-    &__label{
+
+    &__label {
         text-transform: capitalize;
         font-size: 1rem;
     }
@@ -121,20 +122,22 @@
             }
         }
     }
-    &__switchContainer{
+
+    &__switchContainer {
         display: flex;
-        flex-direction: column; 
+        flex-direction: column;
         gap: 1rem;
     }
-    &__fileInput{
+
+    &__fileInput {
         display: none;
-        &Label{
+
+        &Label {
             position: relative;
             display: flex;
             align-items: center;
             justify-content: center;
             width: 100%;
-            max-width: 600px;
             height: 100px;
             min-height: 400px;
             border-radius: 1rem;
@@ -146,7 +149,8 @@
         }
 
     }
-    &__progress{
+
+    &__progress {
         position: absolute;
         width: 100%;
         height: 100%;
@@ -157,10 +161,77 @@
         align-items: center;
         justify-content: center;
     }
-    &__image{
+
+    &__image {
         width: 100%;
         max-width: 600px;
         height: 100%;
         border-radius: 1rem;
+    }
+
+    &__select {
+        position: absolute;
+        z-index: 10;
+        margin-top: 1rem;
+        width: 100%;
+        background-color: rgba(255, 255, 255, 0.068);
+        backdrop-filter: blur(15px) saturate(100%);
+        -webkit-backdrop-filter: blur(15px) saturate(100%);
+        box-shadow: inset 0 0 15px 2px rgb(255 255 255 / 20%);
+        overflow: auto;
+        max-height: 600px;
+        border-radius: .5rem;
+
+        &Button {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            justify-content: space-between;
+            padding: 1rem;
+            border-radius: .7rem;
+            background-color: rgba(255, 255, 255, 0.068);
+            backdrop-filter: blur(15px) saturate(100%);
+            -webkit-backdrop-filter: blur(15px) saturate(100%);
+            box-shadow: inset 0 0 15px 2px rgb(255 255 255 / 20%);
+            color: #888;
+        }
+
+        &Search {
+            background-color: transparent;
+            width: 100%;
+            padding: 1rem;
+
+            &:focus {
+                outline: none;
+            }
+
+            &__Container {
+                position: sticky;
+                top: 0;
+                background-color: transparent;
+            }
+        }
+
+        &List {
+            padding-block: 4px;
+            border-top: 1px solid #696969;
+        }
+
+        &Item {
+            padding-inline: 12px;
+            padding-block: 18px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: #999;
+
+            &Selected {
+                color: cornflowerblue;
+            }
+        }
+        &Selected{
+            color: #fff;
+        }
     }
 }

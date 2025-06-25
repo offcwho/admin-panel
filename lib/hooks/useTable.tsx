@@ -1,4 +1,5 @@
 import { useEffect } from "react"
+import styles from '../styles/useTable.module.scss'
 import ColumnHeader from "../components/_dashboard/components/table/ColumnHeader"
 import Table from "../components/_dashboard/components/table/Table"
 import TableGroup from "../components/_dashboard/components/table/TableGroup"
@@ -7,14 +8,18 @@ import useApi from "./useApi"
 import TableRow from "../components/_dashboard/components/table/TableRow"
 import TableCell from "../components/_dashboard/components/table/TableCell"
 import { AnimatePresence, motion } from "framer-motion"
+import Loading from "../components/_loading/Loading"
 
-export default function useTable(pageName: string) {
+export default function useTable(url: string, names: string[], { page }: { page: string }) {
     const { get, data, loading } = useApi();
 
     useEffect(() => {
-        get(`/api/${pageName}`)
+        get(`/api/${url}`)
     }, [])
-    const table = (...names: string[]) => {
+
+    const table = (renderRow: (item: any) => React.ReactNode[]) => {
+        if (loading) return <Loading />
+
         return (
             <AnimatePresence>
                 <motion.div
@@ -25,19 +30,14 @@ export default function useTable(pageName: string) {
                 >
                     <Table>
                         <TableHeader edit>
-                            {names ?
-                                names.map((name, index) => (
-                                    <ColumnHeader key={index}>{name}</ColumnHeader>
-                                )) : ''}
+                            {names.map((name, index) => (
+                                <ColumnHeader key={index}>{name}</ColumnHeader>
+                            ))}
                         </TableHeader>
                         <TableGroup>
                             {data.map(item => (
-                                <TableRow edit={item.id} key={item.id} pageName={pageName}>
-                                    {names ?
-                                        names.map(name => (
-                                            <TableCell key={item[name]}>{item[name]}</TableCell>
-                                        )) : ''
-                                    }
+                                <TableRow edit={item.id} key={item.id} pageName={page}>
+                                    {renderRow(item)}
                                 </TableRow>
                             ))}
                         </TableGroup>
@@ -46,5 +46,43 @@ export default function useTable(pageName: string) {
             </AnimatePresence>
         )
     }
-    return { table, loading }
+    const image = (content: string, { rounded }: { rounded?: boolean }) => {
+        return (
+            <TableCell key={content}>
+                <div className={styles.root}>
+                    <img
+                        src={content}
+                        alt={`Изображение`}
+                        className={`${styles.root__image} ${rounded && styles.root__rounded}`}
+                    />
+                </div>
+            </TableCell>
+        )
+    }
+    const title = (content: string) => {
+        return (
+            <TableCell key={content}>
+                <div className={styles.root}>
+                    <h3>{content}</h3>
+                </div>
+            </TableCell>
+        )
+    }
+    const description = (content: string) => {
+        return (
+            <TableCell key={content}>
+                <div className={styles.root}>
+                    <p>{content}</p>
+                </div>
+            </TableCell>
+        )
+    }
+    const column = (content: string) => {
+        return(
+            <TableCell key={content}>
+                <span>{content}</span>
+            </TableCell>
+        )
+    }
+    return { table, image, title, description, column }
 }

@@ -7,7 +7,7 @@ export default function useApi() {
     const [error, setError] = useState('')
     const [success, setSuccess] = useState('')
 
-    const post = async ({ values, link, params }: { values: Record<string, string>, link: string, params: string }) => {
+    const post = async ({ values, link, params }: { values: Record<string, string>, link: string, params?: string }) => {
         try {
             await api.post(
                 link,

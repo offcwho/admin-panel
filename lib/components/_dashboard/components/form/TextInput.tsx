@@ -1,33 +1,35 @@
 'use client'
 
 import styles from './formComponents.module.scss'
+import React from 'react';
 
-export default function TextInput({ 
-    label, 
-    onChange, 
-    value, 
-    name, 
+export const TextInput = React.memo(({
+    name,
     placeholder,
-    type
-}: { 
-    placeholder?: string, 
-    label?: string, 
-    value: string, 
-    name: string, 
-    onChange: React.ChangeEventHandler<HTMLInputElement> 
-    type: string
-}) {
+    label,
+    type,
+    value,
+    onChange
+}: {
+    name: string;
+    placeholder?: string;
+    label?: string;
+    type?: string;
+    value: string;
+    onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
+}) => {
     return (
         <div className={styles.root}>
-            {label ? <label>{label}</label> : ''}
+            {label && <label htmlFor={name}>{label}</label>}
             <input
-                type={type}
+                type={type || 'text'}
+                id={name}
                 name={name}
+                placeholder={placeholder}
                 value={value}
                 onChange={onChange}
-                placeholder={placeholder}
                 className={styles.root__input}
             />
         </div>
-    )
-}
+    );
+});

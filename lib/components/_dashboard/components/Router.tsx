@@ -14,7 +14,7 @@ export default function Router({ children }: { children: React.ReactNode }) {
                 redirect('/login')
             }
         }
-    }, [user])
+    }, [])
 
     if (loading) return <Loading />
 

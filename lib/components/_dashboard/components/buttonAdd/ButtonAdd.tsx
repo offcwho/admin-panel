@@ -1,5 +1,5 @@
 import { useRouter } from "next/navigation";
-import styles from '../styles/buttonAdd.module.scss'
+import styles from './buttonAdd.module.scss'
 
 export default function ButtonAdd(pageName: { pageName: string }) {
     const router = useRouter()

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Ubuntu, Geist_Mono } from "next/font/google";
-import "./globals.scss";
+import "./globals.css";
 import { AuthProvider } from "@/lib/context/AuthContext";
 
 const ubuntu = Ubuntu({

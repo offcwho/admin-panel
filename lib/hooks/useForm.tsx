@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import TextInput from "../components/_dashboard/components/form/TextInput"
+import { useCallback, useEffect, useState } from "react";
+import { TextInput } from "../components/_dashboard/components/form/TextInput"
 import FormGroup from "../components/_dashboard/components/formGroup/FormGroup";
 import useApi from "./useApi";
 import Textarea from "../components/_dashboard/components/form/Textarea";
@@ -9,12 +9,13 @@ import styles from '../../app/dashboard/users/page.module.scss';
 import ToggleComponent from "../components/_dashboard/components/form/Toggle";
 import api from "../api/api";
 import { AxiosProgressEvent } from "axios";
+import Select from "../components/_dashboard/components/form/Select";
 
-export function useForm({ params, link }: { params: string, link: string }) {
+export function useForm({ params, link }: { params?: string, link: string }) {
     const { post } = useApi()
 
     const [values, setValues] = useState<Record<string, any>>({})
-    const [file, setFile] = useState<{ url: string, path: string }>()
+    const [files, setFiles] = useState<{ url: string, path: string }>()
     const [progress, setProgress] = useState<number>(0)
     const [uploadStatus, setUploadStatus] = useState<'idle' | 'uploading' | 'success' | 'error'>('idle')
 
@@ -29,23 +30,35 @@ export function useForm({ params, link }: { params: string, link: string }) {
             console.log('success')
         }
     }
-    useEffect(() => {
-        console.log(file)
-    }, [file])
 
-    const handleChange = (name: string) => (e: React.ChangeEvent<HTMLInputElement> & React.ChangeEvent<HTMLTextAreaElement>) => {
+    useEffect(() => {
         setValues(prev => ({
             ...prev,
-            [name]: e.target.value
+            image: files?.url
         }))
-    }
+    }, [files])
+
+    const handleChange = useCallback((name: string) =>
+        (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+            setValues(prev => ({
+                ...prev,
+                [name]: e.target.value
+            }));
+        }, []);
     const handleToggleChange = (name: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
         setValues(prev => ({
             ...prev,
             [name]: e.target.checked
         }))
     }
-    const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleChangeSelect = (name: string, value: string | number) => {
+        setValues(prev => ({
+            ...prev,
+            [name]: Number(value)
+        }))
+    }
+    const handleUpload = () => async (e: React.ChangeEvent<HTMLInputElement>) => {
+
         const file = e.target.files?.[0]
 
         if (!file) return
@@ -64,7 +77,7 @@ export function useForm({ params, link }: { params: string, link: string }) {
                     'Accept': 'application/json',
                 },
                 onUploadProgress: (progressEvent: AxiosProgressEvent) => {
-                    if(progressEvent.total) {
+                    if (progressEvent.total) {
                         const percentCompleted = Math.round(
                             (progressEvent.loaded * 100) / progressEvent.total
                         );
@@ -74,27 +87,30 @@ export function useForm({ params, link }: { params: string, link: string }) {
             });
 
             setUploadStatus('success')
-            setFile(response.data)
+            setFiles(response.data)
         } catch (error) {
             setUploadStatus('error')
             console.error('Uploaded file:', error)
         }
     }
 
-    const form = (children: React.ReactNode[], { gap, cols }: { gap?: number, cols?: number }) => {
+    const form = (children: React.ReactNode[], { className }: { className?: string }) => {
         return (
-            <form onSubmit={handleSubmit} className={`grid gap-${gap} grid-cols-${cols} ${styles.root__form}`}>
-                <>
-                    {children}
-                </>
-                <FormButton />
-            </form>
+            <>
+                <form onSubmit={handleSubmit} className={`${className} ${styles.root__form}`}>
+                    <>
+                        {children}
+                        <FormButton />
+                    </>
+                </form>
+            </>
         )
     }
-    const group = (children: React.ReactNode[], { className }: { className?: string }) => {
-        return <FormGroup className={className}><>{children}</></FormGroup>
+    const group = (children: React.ReactNode[], { className, name }: { className?: string, name: string }) => {
+
+        return <FormGroup className={className} key={name}><>{children}</></FormGroup>
     }
-    const textInput = (
+    const textInput = useCallback((
         {
             name,
             placeholder,
@@ -117,7 +133,7 @@ export function useForm({ params, link }: { params: string, link: string }) {
                 onChange={handleChange(name)}
             />
         )
-    }
+    }, [values, handleChange])
     const textArea = ({
         name,
         placeholder,
@@ -146,14 +162,13 @@ export function useForm({ params, link }: { params: string, link: string }) {
         placeholder?: string,
         label?: string,
     }) => {
-        console.log(values[name])
         return <FileInput
             key={name}
             name={name}
             label={label}
             placeholder={placeholder}
-            value={file}
-            onChange={handleUpload}
+            value={files}
+            onChange={handleUpload()}
             status={uploadStatus}
             progress={progress}
         />
@@ -167,5 +182,16 @@ export function useForm({ params, link }: { params: string, link: string }) {
             checked={values[name] || false}
         />
     }
-    return ({ form, group, textInput, textArea, fileInput, values, toggle })
+    const select = ({ name, label, url, title }: { name: string, label?: string, url: string, title: string }) => {
+        return <Select
+            key={name}
+            name={name}
+            label={label}
+            value={values[name] || ''}
+            onChange={(value) => handleChangeSelect(name, value)}
+            url={url}
+            title={title}
+        />
+    }
+    return ({ form, group, textInput, textArea, fileInput, values, toggle, select })
 }

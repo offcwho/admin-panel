@@ -1,0 +1,12 @@
+.root{
+    display: flex;
+    align-items: center;
+    height: 100%;
+    &__image{
+        width: 50px;
+        height: 50px;
+    }
+    &__rounded{
+        border-radius: 100%;
+    }
+}

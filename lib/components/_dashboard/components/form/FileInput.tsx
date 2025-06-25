@@ -10,7 +10,7 @@ export default function FileInput({
 }: {
     placeholder?: string,
     label?: string,
-    value: {
+    value?: {
         url: string,
         path: string
     },
@@ -33,7 +33,7 @@ export default function FileInput({
                     <>
                         <h3 className={styles.root__imageTitle}></h3>
                         <img
-                            src={`http://localhost:8000/storage/${value.path}`}
+                            src={value.url}
                             alt='Изображение'
                             className={styles.root__image}
                         />
